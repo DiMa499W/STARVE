@@ -1,1 +1,19 @@
-STARVE
+let xray = false
+
+document.addEventListener("keydown", (e) => {
+    if (document.getElementById("chat_block").style.display !== "inline-block"){
+    if(e.code === "KeyX") xray = true
+    }})
+document.addEventListener("keyup", (e) => {
+    if (document.getElementById("chat_block").style.display !== "inline-block"){
+    if(e.code === "KeyX") xray = false
+    }
+})
+    CanvasRenderingContext2D.prototype.drawImage = new Proxy(CanvasRenderingContext2D.prototype.drawImage, {
+        apply: function (target, thisArg, args) {
+            if(xray){
+                thisArg.globalAlpha = 0.5;
+            }
+            return Function.prototype.apply.apply(target, [thisArg, args]);
+        }
+    });
